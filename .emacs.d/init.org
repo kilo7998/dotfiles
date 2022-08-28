@@ -1,0 +1,34 @@
+* Orgモード設定
+** テンプレート設定
+#+begin_src emacs-lisp
+      (setq org-structure-template-alist
+	  '(("s" . "src emacs-lisp")))
+#+end_src
+
+** org-edit-special設定
+#+begin_src emacs-lisp
+  (custom-set-variables '(org-src-window-setup "current-window"))  
+#+end_src
+
+* キーバインド設定
+#+begin_src emacs-lisp
+  (define-key org-src-mode-map (kbd "C-c C-j") 'org-edit-src-exit)
+  (define-key org-mode-map (kbd "C-c C-j") 'org-edit-special)
+  (global-set-key (kbd "C-x C-\\") 'imenu-list-smart-toggle)
+#+end_src
+
+* Web mode
+#+begin_src emacs-lisp
+  (leaf web-mode
+    :mode
+    ("\\.html?\\'" "\\.tpl\\'" "\\.tpl\\.xhtml\\'" "\\.ejs\\'" "\\.hbs\\'" "\\.jsx\\'"
+     "\\(\\.html\\)?\\.erb\\'" "\\.tsx\\'" "\\.vue\\'")
+    :config
+    (add-to-list 'web-mode-ac-sources-alist
+		 '("html" . (ac-source-html-tag ac-source-html-attr ac-source-html-attrv))))
+
+  (yas-global-mode 1)
+  (add-hook 'html-mode-hook 'emmet-mode)
+  (add-hook 'html-mode-hook 'ac-emmet-html-setup)
+
+#+end_src
